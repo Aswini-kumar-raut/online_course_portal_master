@@ -1,0 +1,105 @@
+/* General body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for the button and info box */
+.learning-container {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Style for the button */
+.learning-button {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.learning-button:hover {
+    background-color: #218838;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Style for the info box */
+.learning-info {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.9);
+    transform-origin: top center;
+}
+
+/* Info box active state */
+.learning-info.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Styles for paragraphs inside the info box */
+.learning-info p {
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333333;
+}
+
+/* Styles for the list of completed courses */
+#completedCoursesList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#completedCoursesList li {
+    font-size: 16px;
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#completedCoursesList li:hover {
+    background-color: #e2e6ea;
+    transform: translateX(5px);
+}
+
+/* Additional responsive design for smaller screens */
+@media (max-width: 600px) {
+    .learning-button {
+        font-size: 18px;
+        padding: 12px 25px;
+    }
+
+    .learning-info {
+        padding: 20px;
+    }
+
+    .learning-info p {
+        font-size: 16px;
+    }
+
+    #completedCoursesList li {
+        font-size: 14px;
+        padding: 8px;
+    }
+}

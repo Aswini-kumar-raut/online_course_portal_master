@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIFT Courses - Learn Anything on your schedule</title>
+    <link rel="icon" href="logo1.png" type="image/x-icon">
+    <!-- Your existing styles -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .layout {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .nav1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-stack-text);
+            font-weight: 400;
+            line-height: 1.4;
+            max-height: 60px;
+        }
+        .nav1 img {
+            margin-right: 20px;
+            max-height: auto;
+            filter: brightness(1.0) saturate(150%);
+        }
+        .Categories {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: black;
+            margin-right: 20px;
+            position: relative;
+        }
+        .Categories:hover .dropdown {
+            display: block;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            min-width: 200px;
+        }
+        .dropdown-item {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Keep the same text color */
+            display: block; /* Ensure it behaves like a block element for styling */
+            padding: 10px; /* Add some padding */
+            cursor: pointer; 
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #137082;
+        }
+        .dropdown-submenu {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            display: none;
+            min-width: 200px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .dropdown-item:hover .dropdown-submenu {
+            display: block;
+        }
+        .search-form {
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-input {
+            width: 30%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M21.707 20.293l-4.518-4.518A7.93 7.93 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8a7.93 7.93 0 0 0 5.775-2.493l4.518 4.518c.378.378.88.586 1.414.586s1.036-.208 1.414-.586c.781-.781.781-2.048 0-2.829zM2 10c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6-6-2.686-6-6z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 20px auto;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #137082;
+            box-shadow: 0 0 0 0.2rem rgba(36, 111, 154, 0.25);
+        }
+        .search-button {
+            display: none;
+        }
+.signIn, .register {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease, taransform 0.3s ease;
+    overflow: hidden;
+    z-index: 1;
+    background-color: transparent;
+    color: #137082;
+}
+
+.signIn {
+    
+    color: #137082;
+}
+
+.signIn:hover {
+    background-color: #0d5f6a;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.signIn:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    font: bold;
+    background-color: transparent;
+    border-radius: 50%;
+    transition: width 0.3s, height 0.3s;
+    z-index: -1;
+}
+
+.signIn:hover:before {
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.register {
+    
+    background-color: white;
+    color: #137082;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    padding: 12px 24px;
+}
+
+.register:hover {
+    background-color: #137082;
+    color: white;
+    
+}
+
+.search-input {
+    padding: 10px 40px 10px 30px; /* Adjust padding to make space for the icon */
+}
+
+/* Icon styles */
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+}
+
+.search-form {
+    position: relative;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -55%);
+
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -55%);
+    }
+}
+/* Popup styles */
+.register-popup, .login-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.4 ease-out;
+    z-index: 999;
+}
+
+.register-popup-content, .login-popup-content {
+    padding: 20px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.register-popup-content label, .login-popup-content label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.register-popup-content input, .login-popup-content input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.register-popup-content input[type="submit"], .login-popup-content input[type="submit"] {
+    background-color: #137082;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.register-popup-content input[type="submit"]:hover, .login-popup-content input[type="submit"]:hover {
+    background-color: #0a4c6a;
+}
+        .body {
+            text-align: center;
+            margin-top: 20px;
+            height: 100%;
+        }
+        #college {
+            width: 100%;
+            height: 90vh;
+            object-fit: cover;
+            object-position: center;
+        }
+        .text-block {
+            position: absolute;
+            top: 200px;
+            left: 55%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 800px;
+        }
+        .text-block h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .emphasized {
+            color: #f39c12;
+        }
+        .nav2 {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .nav2 .Categories {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: black;
+            position: relative;
+        }
+        .nav2 .Categories:hover .dropdown {
+            display: block;
+        }
+        .nav2 .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            min-width: 200px;
+            white-space: nowrap; /* Keep items in one line */
+        }
+        .nav2 .dropdown-item {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Keep the same text color */
+            display: block; /* Ensure it behaves like a block element for styling */
+            padding: 10px; /* Add some padding */
+            cursor: pointer; 
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav2 .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #137082;
+        }
+        .nav1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 15000; /* Adjust the z-index as needed */
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-stack-text);
+    font-weight: 400;
+    line-height: 1.4;
+    max-height: 60px;
+}
+
+.nav2 {
+    position: fixed;
+    top: 60px; /* Adjust the top value based on the height of nav1 */
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Adjust the z-index as needed */
+    background-color: #fff;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+            background-color: skyblue;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 20px;
+        }
+        .footer-column {
+            padding: 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        .footer-column ul li a {
+            text-decoration: none;
+            color:black;
+            transition: color 0.3s;
+        }
+        .footer-column ul li a:hover {
+            color: #137082;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .figure
+        {
+            padding: 10px;
+            height: auto;
+            max-width: 100%;
+            border-style: none;
+            vertical-align: middle;
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+        .register-popup, .login-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.register-popup-content, .login-popup-content {
+    max-width: 300px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+    </style>
+</head>
+<body>
+    <!-- Your existing HTML structure -->
+    <div class="layout">
+        <div class="nav1">
+            <img src="logo1.png" alt="LOGO" width="50" height="45" loading="lazy">
+            <button type="button" class="Categories">
+                <span class="ud">Categories</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">Development
+                        <div class="dropdown-submenu">
+                            <a href="Appdevelopment.html" class="dropdown-item">App Development</a>
+                            <a href="Webdevelopment.html" class="dropdown-item">Web Development</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Programming Languages
+                        <div class="dropdown-submenu">
+                            <a href="Languages.html#java" class="dropdown-item">Java</a>
+                            <a href="Languages.html#python" class="dropdown-item">Python</a>
+                            <a href="Languages.html#html" class="dropdown-item">HTML</a>
+                            <a href="Languages.html#css" class="dropdown-item">CSS</a>
+                            <a href="Languages.html#javascript" class="dropdown-item">javaScript</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Business
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Entrepreneurship</div>
+                            <div class="dropdown-item">Communication</div>
+                            <div class="dropdown-item">Business Startegy</div>
+                            <div class="dropdown-item">Management</div>
+                            <div class="dropdown-item">Sales</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Personal Development
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Personal Transformation</div>
+                            <div class="dropdown-item">personal productivity</div>
+                            <div class="dropdown-item">Leadership</div>
+                            <div class="dropdown-item">Career Development</div>
+                            <div class="dropdown-item">Soft Skills</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Design
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Web Design</div>
+                            <div class="dropdown-item">Graphic Design</div>
+                            <div class="dropdown-item">3D & Animation</div>
+                            <div class="dropdown-item">Game Design</div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+            <form class="search-form" action="/search" method="get">
+                <input type="text" name="q" class="search-input" placeholder="What do you want to learn?">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <a class="signIn" href="#"><span>Sign In</span></a>
+            <a class="register" href="#"><span>Register for free</span></a>
+        </div>
+
+        <!-- Second navigation block with horizontal dropdown lists -->
+        <div class="nav2">
+            <button type="button" class="Categories">
+                <span class="ud">Development</span>
+                <div class="dropdown">
+                    <a href="Appdevelopment.html" class="dropdown-item">App Development</a>
+                    <a href="Webdevelopment.html" class="dropdown-item">Web Development</a>
+
+                </div>
+            </button>
+            <button type="button" class="Categories">
+                <span class="ud">Programming Languages</span>
+                <div class="dropdown">
+                    <a href="Languages.html#java" class="dropdown-item">Java</a>
+                    <a href="Languages.html" class="dropdown-item">Python</a>
+                    <a href="Languages.html#html" class="dropdown-item">HTML</a>
+                    <a href="Languages.html#css" class="dropdown-item">CSS</a>
+                    <a href="Languages.html#javascript" class="dropdown-item">javaScript</a>
+                </div>
+            </button>
+            <button type="button" class="Categories">
+                <span class="ud">Business</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">Entrepreneurship</div>
+                    <div class="dropdown-item">Marketing</div>
+                    <div class="dropdown-item">Finance</div>
+                    <div class="dropdown-item">Management</div>
+                    <div class="dropdown-item">Sales</div>
+                </div>
+            </button>
+            <button type="button" class="Categories">
+                <span class="ud">Personal Development</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">Leadership</div>
+                    <div class="dropdown-item">Time Management</div>
+                    <div class="dropdown-item">Communication</div>
+                    <div class="dropdown-item">Productivity</div>
+                    <div class="dropdown-item">Career Development</div>
+                </div>
+            </button>
+            <button type="button" class="Categories">
+                <span class="ud">Design</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">Graphic Design</div>
+                    <div class="dropdown-item">Web Design</div>
+                    <div class="dropdown-item">Game Design</div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Main content -->
+        <div class="body">
+            <img src="background1.jpg" alt="course" id="college">
+            <div class="text-block">
+                <h1 class="h1">Bring your goals <span class="emphasized">into focus</span></h1>
+                <h3 class="h1">GIFT college offers online courses and programs that prepare you for every career moment</h3>
+            </div>
+        </div>
+    </div>
+
+<!-- Updated Register Popup -->
+<div class="register-popup">
+    <h2>Register for free</h2>
+    <div class="register-popup-content">
+        <form id="registerForm">
+            <label for="registerFullname">
+                <i class="fas fa-user input-icon"></i> Full Name:
+            </label>
+            <input type="text" id="registerFullname" name="fullname" placeholder="Enter your full name">
+            <label for="registerEmail">
+                <i class="fas fa-envelope input-icon"></i> Email:
+            </label>
+            <input type="email" id="registerEmail" name="email" placeholder="Enter your email">
+            <label for="registerPassword">
+                <i class="fas fa-lock input-icon"></i> Password:
+            </label>
+            <input type="password" id="registerPassword" name="password" placeholder="Enter your password">
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</div>
+
+<!-- Updated Login Popup -->
+<div class="login-popup">
+    <h2>Sign In</h2>
+    <div class="login-popup-content">
+        <form id="loginForm">
+            <label for="loginEmail">
+                <i class="fas fa-envelope input-icon"></i> Email:
+            </label>
+            <input type="email" id="loginEmail" name="email" placeholder="Enter your email">
+            <label for="loginPassword">
+                <i class="fas fa-lock input-icon"></i> Password:
+            </label>
+            <input type="password" id="loginPassword" name="password" placeholder="Enter your password">
+            <input type="submit" value="Sign In">
+        </form>
+    </div>
+</div>
+    <!-- Footer section -->
+    <div class="footer">
+        <div class="footer-column">
+            <h3>BROWSE COURSES</h3>
+            <br>
+            <ul>
+                <li><a href="#">Learn AI</a></li>
+                <li><a href="#">Learn Python</a></li>
+                <li><a href="#">Learn Architecture</a></li>
+                <li><a href="#">Learn Computer Programming</a></li>
+                <li><a href="#">Learn Software Engineering</a></li>
+                <li><a href="#">Learn Blockchain</a></li>
+                <li><a href="#">Learn Project Management</a></li>
+            </ul>
+        </div>
+
+        
+        
+        <div class="footer-column">
+            <h3>START A NEW CAREER</h3>
+            <br>
+            <ul>
+                <li><a href="#">Coding Boot Camp</a></li>
+                <li><a href="#">AI Boot Camp</a></li>
+                <li><a href="#">Data Analytics Boot Camp</a></li>
+                <li><a href="#">UX/UI Boot Camp</a></li>
+                <li><a href="#">Cybersecurity Boot Camp</a></li>
+                <li><a href="#">UX/UI Boot Camp</a></li>
+                <li><a href="#">Digital Marketing Boot Camp</a></li>
+
+            </ul>
+        </div>
+
+        
+        <div class="footer-column">
+            <h3>COMPLETE YOUR COURSE OFFLINE</h3>
+            <br>
+            <ul>
+                <li><a href="#">BACHELOR OF TECHNOLOGY</a></li>
+                <li><a href="#">DIPLOMA</a></li>
+                <li><a href="#">MASTER OF COMPUETR APPLICATION</a></li>
+                <li><a href="#">MASTER OF BUSINESS ADMINSTRATION</a></li>
+                <li><a href="#">MASTER OF TECHNOLOGY</a></li>
+                <li><a href="#">DOCTOR OF PHILOSOPHY</a></li>
+                <li><a href="#">ENGINEERING</a></li>
+
+            </ul>
+        </div>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <img src="Software-Engineer-Roadmap_-How-to-Become-Successful.webp" alt="figure"  class="figure">
+        
+
+
+    <!-- JavaScript code -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerLink = document.querySelector('.register');
+            const loginLink = document.querySelector('.signIn');
+            const registerPopup = document.querySelector('.register-popup');
+            const loginPopup = document.querySelector('.login-popup');
+
+            // Event listener to show register popup
+            registerLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerPopup.style.display = 'block';
+                loginPopup.style.display = 'none'; // Hide login popup if it's open
+            });
+
+            // Event listener to show login popup
+            loginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginPopup.style.display = 'block';
+                registerPopup.style.display = 'none'; // Hide register popup if it's open
+            });
+
+            // Handle register form submission
+            const registerForm = document.getElementById('registerForm');
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const fullname = registerForm.querySelector('#registerFullname').value;
+                const email = registerForm.querySelector('#registerEmail').value;
+                const password = registerForm.querySelector('#registerPassword').value;
+
+                // Save user data to localStorage
+                localStorage.setItem('fullname', fullname);
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+
+                alert('Registration successful!');
+                registerPopup.style.display = 'none';
+                registerForm.reset();
+            });
+             //listener to hide popup
+            document.addEventListener('click', function(e) {
+            if (!registerLink.contains(e.target) && !registerPopup.contains(e.target)) {
+                registerPopup.style.display = 'none';
+            }
+            if (!loginLink.contains(e.target) && !loginPopup.contains(e.target)) {
+                loginPopup.style.display = 'none';
+            }
+        });
+
+
+            // Handle login form submission
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = loginForm.querySelector('#loginEmail').value;
+                const password = loginForm.querySelector('#loginPassword').value;
+
+                // Retrieve user data from localStorage
+                const storedEmail = localStorage.getItem('email');
+                const storedPassword = localStorage.getItem('password');
+
+                // Simulate login validation (replace with your actual logic)
+                if (email === storedEmail && password === storedPassword) {
+                    alert('Login successful!');
+                    loginPopup.style.display = 'none';
+                    window.location.href = 'main.html'; // Redirect to main page after login
+                    loginForm.reset();
+                } else {
+                    alert('Invalid email or password. Please try again.');
+                    loginForm.reset();
+                }
+            });
+        });
+
+        function registerUser() {
+        var firstName = document.getElementById("registerFullname").value;
+        var email = document.getElementById("registerEmail").value;
+        var password = document.getElementById("registerPassword").value;
+        // Add other fields if needed
+                localStorage.setItem('fullname', fullname);
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+
+        // Redirect to main.html after registration
+        window.location.href = "main.html";
+    }
+
+    function loginUser() {
+        var loginFirstName = document.getElementById("registerFullname").value;
+        // Add other fields and validations if needed
+
+        localStorage.setItem("firstName", registerFullname);
+        
+        // Redirect to main.html after login
+        window.location.href = "main.html";
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIFT Courses - Learn Anything on your schedule</title>
+    <link rel="icon" href="mainLogo.jpg" type="image/x-icon">
+    <style>
+         * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .layout {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .nav1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-stack-text);
+            font-weight: 400;
+            line-height: 1.4;
+            max-height: 60px;
+        }
+        .nav1 img {
+            margin-right: 20px;
+            max-height: auto;
+            filter: brightness(1.0) saturate(150%);
+        }
+        .Categories {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-size: 16px;
+            color: black;
+            margin-right: 20px;
+            position: relative;
+        }
+        .Categories:hover .dropdown {
+            display: block;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            min-width: 200px;
+           
+        }
+        .dropdown-item {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Keep the same text color */
+            display: block; /* Ensure it behaves like a block element for styling */
+            padding: 10px; /* Add some padding */
+            cursor: pointer; 
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
+        .dropdown-submenu {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            display: none;
+            min-width: 200px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .dropdown-item:hover .dropdown-submenu {
+            display: block;
+        }
+        .search-form {
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-input {
+            width: 30%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M21.707 20.293l-4.518-4.518A7.93 7.93 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8a7.93 7.93 0 0 0 5.775-2.493l4.518 4.518c.378.378.88.586 1.414.586s1.036-.208 1.414-.586c.781-.781.781-2.048 0-2.829zM2 10c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6-6-2.686-6-6z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 20px auto;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .search-button {
+            display: none;
+        }
+        .signIn, .register {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .signIn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            font: bold;
+            background-color: transparent;
+            border-radius: 50%;
+            transition: width 0.3s, height 0.3s;
+            z-index: -1;
+        }
+        .signIn:hover:before {
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .register {
+            border: 2px solid #007bff;
+            color: white;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            padding: 12px 24px;
+        }
+        .register:hover {
+            background-color: white;
+            color: blue;
+            border-color: blue;
+        }
+        .signIn span, .register span {
+            position: relative;
+            z-index: 2;
+        }
+        .body {
+            text-align: center;
+            margin-top: 20px;
+            height: 100%;
+            background-color: black;
+        }
+        #college {
+            width: 100%;
+            height: 90vh;
+            object-fit: cover;
+            object-position: center;
+        }
+
+
+        .emphasized {
+            color: #f39c12;
+        }
+        .nav2 {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 60px; /* Adjust the top value based on the height of nav1 */
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Adjust the z-index as needed */
+            background-color: #fff;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+        .nav2 .Categories {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: black;
+            position: relative;
+        }
+        .nav2 .Categories:hover .dropdown {
+            display: block;
+        }
+        .nav2 .dropdown {
+           
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            min-width: 200px;
+            white-space: nowrap; /* Keep items in one line */
+        }
+        .nav2 .dropdown-item {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Keep the same text color */
+            display: block; /* Ensure it behaves like a block element for styling */
+            padding: 10px; /* Add some padding */
+            cursor: pointer; 
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav2 .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
+        .nav1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 15000; /* Adjust the z-index as needed */
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-stack-text);
+    font-weight: 400;
+    line-height: 1.4;
+    max-height: 60px;
+}
+
+
+.footer {
+            background-color: skyblue;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 20px;
+        }
+        .footer-column {
+            padding: 20px;
+        }
+        .footer-column h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        .footer-column ul li a {
+            text-decoration: none;
+            color:black;
+            transition: color 0.3s;
+        }
+        .footer-column ul li a:hover {
+            color: #0056b3;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .figure
+        {
+            padding: 10px;
+            height: auto;
+            max-width: 100%;
+            border-style: none;
+            vertical-align: middle;
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 250px;
+        }
+
+        .profile-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .profile-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin: 20px;
+        }
+        .video-item {
+            position: relative;
+}
+.video-description {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px;
+    transition: opacity 0.3s ease-in-out;
+}
+.video-item:hover .video-description {
+    display: block;
+}
+
+.video-description h4 {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.video-description p {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+        .video-grid img {
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+     
+
+        .video-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .video-player {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+        }
+
+        .video-player iframe {
+            width: 80%;
+            height: 80%;
+        }
+
+        .video-player .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+        .content {
+    margin-top: 150px; /* Adjust based on your design */
+    /* Other styles for .content */
+}
+.thin
+{
+    color: rgb(162, 154, 142);
+}
+.close {
+    position: absolute;
+    margin: 40px;
+            top: 20px;
+            right: 10px;
+            font-size: 35px; /* Increased font size */
+            color: white;
+            cursor: pointer;
+            background-color: rgba(212, 17, 17, 0.5); /* Added background color */
+            border-radius: 50%; /* Rounded corners */
+            padding: 5px; /* Padding for better click area */
+}
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="nav1">
+            <img src="mainLogo.jpg" alt="GIFT" width="80" height="34" loading="lazy">
+            <button type="button" class="Categories">
+                <span class="ud">Categories</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">Development
+                        <div class="dropdown-submenu">
+                            <a href="Webdevelopment.html" class="dropdown-item">App Development</a>
+                            <a href="Webdevelopment.html" class="dropdown-item">Web Development</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Programming Languages
+                        <div class="dropdown-submenu">
+                            <a href="Languages.html#java" class="dropdown-item">Java</a>
+                            <a href="Languages.html" class="dropdown-item">Python</a>
+                            <a href="Languages.html#html" class="dropdown-item">HTML</a>
+                            <a href="Languages.html#css" class="dropdown-item">CSS</a>
+                            <a href="Languages.html#javascript" class="dropdown-item">javaScript</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Business
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Entrepreneurship</div>
+                            <div class="dropdown-item">Communication</div>
+                            <div class="dropdown-item">Business Startegy</div>
+                            <div class="dropdown-item">Management</div>
+                            <div class="dropdown-item">Sales</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Personal Development
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Personal Transformation</div>
+                            <div class="dropdown-item">personal productivity</div>
+                            <div class="dropdown-item">Leadership</div>
+                            <div class="dropdown-item">Career Development</div>
+                            <div class="dropdown-item">Soft Skills</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item">Design
+                        <div class="dropdown-submenu">
+                            <div class="dropdown-item">Web Design</div>
+                            <div class="dropdown-item">Graphic Design</div>
+                            <div class="dropdown-item">3D & Animation</div>
+                            <div class="dropdown-item">Game Design</div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+            <form class="search-form" action="/search" method="get">
+                <input type="text" name="q" class="search-input" placeholder="What do you want to learn?">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <a class="signIn" href="#"><span>My Learning</span></a>
+            <div class="profile-container">
+                <div class="profile-icon" id="profileIcon"></div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="profile-item" id="profileName"></div>
+                    <div class="profile-item" id="profileEmail"></div>
+                    <div class="profile-item" onclick="logout()">Logout</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="nav2">
+       
+            <button type="button" class="Categories">
+                <span class="ud">Web Development</span>
+                <div class="dropdown">
+                    <div class="dropdown-item">programming Languages
+                        <div class="dropdown-submenu">
+                            <a href="#html" class="dropdown-item">HTML</a>
+                            <a href="#css" class="dropdown-item">CSS</a>
+                            <a href="#javascript" class="dropdown-item">javaScrapt</a>
+                            
+                        </div>
+                </div>
+            </button>
+
+        </div>
+
+        <div class="content">
+            <h1>Development Courses</h1>
+            <br>
+            <h2>Courses To Get Started</h2>
+            <h2 class="thin">Explore courses from experienced, real-world experts.</h2>
+            <div class="video-section">
+                <div class="video-grid">
+                    <div class="video-item" data-video-id="C6YtPJxNULA">
+                        <iframe width="1500" height="500" src="https://www.youtube.com/embed/videoseries?list=PLDzeHZWIZsTo0wSBcg4-NMIbC0L8evLrD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <h2 id="html">HTML Courses</h2>
+                <div class="video-grid">
+                    <div class="video-item" data-video-id="HcOc7P5BMi4">
+                        <img src="https://img.youtube.com/vi/HcOc7P5BMi4/0.jpg" data-video-id="HcOc7P5BMi4">
+                        <div class="video-description">
+                            <h4>HTML Tutorial for Beginners | Complete HTML with Notes & Code</h4>
+                            <p>Notes - https://drive.google.com/drive/folder...</p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="QXPWs00RD3A">
+                        <img src="https://img.youtube.com/vi/QXPWs00RD3A/0.jpg" data-video-id="QXPWs00RD3A">
+                        <div class="video-description">
+                            <h4> 
+                                
+                                HTML Tutorial in Hindi | Complete HTML Course For Beginners to Advanced | HTML Tutorial For Beginner</h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero </p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="VjCHupej12U">
+                        <img src="https://img.youtube.com/vi/VjCHupej12U/0.jpg" data-video-id="VjCHupej12U">
+                        <div class="video-description">
+                            <h4>HTML Tables: Rows, Columns, and Advanced Attributes</h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero </p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="dYrwawDa92U">
+                        <img src="https://img.youtube.com/vi/dYrwawDa92U/0.jpg" data-video-id="dYrwawDa92U">
+                        <div class="video-description">
+                            <h4>Forms in HTML || Complete Web Dev Series 2024 </h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="GmHC1oaK9Ts">
+                        <img src="https://img.youtube.com/vi/GmHC1oaK9Ts/0.jpg" data-video-id="GmHC1oaK9Ts">
+                        <div class="video-description">
+                            <h4>
+                                HTML Forms: From Beginner to Pro </h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>
+                </div>
+                <div class="video-grid">
+                    <div class="video-item" data-video-id="fb4rgYbi84c">
+                        <img src="https://img.youtube.com/vi/fb4rgYbi84c/0.jpg" data-video-id="fb4rgYbi84c">
+                        <div class="video-description">
+                            <h4>Project 2: HTML Media Project || Media tags, Modern HTML and iframes</h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="0ZGAKHoVFs0">
+                        <img src="https://img.youtube.com/vi/0ZGAKHoVFs0/0.jpg" data-video-id="0ZGAKHoVFs0">
+                        <div class="video-description">
+                            <h4> SEO && Head tag in HTML || Favicon, Title, Meta tags </h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="UB1O30fR-EE">
+                        <img src="https://img.youtube.com/vi/UB1O30fR-EE/0.jpg" data-video-id="UB1O30fR-EE">
+                        <div class="video-description">
+                            <h4>HTML Crash Course For Absolute Beginners
+                            </h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero </p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="mL1IcxIUd5Y">
+                        <img src="https://img.youtube.com/vi/mL1IcxIUd5Y/0.jpg" data-video-id="mL1IcxIUd5Y">
+                        <div class="video-description">
+                            <h4>
+                                How to Setup Visual Studio Code for Web Development | HTML, CSS, and JavaScript
+                            </h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero 
+                            </p>
+                               
+                        </div>
+                    </div>  <div class="video-item" data-video-id="4dprtEzunIk">
+                        <img src="https://img.youtube.com/vi/4dprtEzunIk/0.jpg" data-video-id="4dprtEzunIk">
+                        <div class="video-description">
+                            <h4>
+                                HTML Crash Course: Master the Essentials in One Video! Start Your Front-End Journey Today!</h4>
+                            <p>Complete Html Course for 2024 - Zero to Hero </p>
+                               
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <h2 id="css">CSS Courses</h2>
+                <br>
+                <div class="video-grid">
+                    <div class="video-item" data-video-id="tU4xz1r_aE8">
+                        <img src="https://img.youtube.com/vi/tU4xz1r_aE8/0.jpg" data-video-id="tU4xz1r_aE8">
+                        <div class="video-description">
+                            <h4>
+
+                                Mastering CSS: Inline, Internal, and External Stylesheets</h4>
+                            <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div> 
+                    <div class="video-item" data-video-id="XLLluxLg_Xc">
+                        <img src="https://img.youtube.com/vi/XLLluxLg_Xc/0.jpg" data-video-id="XLLluxLg_Xc">
+                        <div class="video-description">
+                            <h4>
+
+                                CSS Typography: Fonts, Colors && Developer tools</h4>
+                            <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>
+                    <div class="video-item" data-video-id="xN8DPjcybpM">
+                        <img src="https://img.youtube.com/vi/xN8DPjcybpM/0.jpg" data-video-id="xN8DPjcybpM">
+                        <div class="video-description">
+                            <h4>
+
+                                CSS "Box Model" in 40 minutes || Complete Web Dev Course</h4>
+                            <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>
+                    <div class="video-item" data-video-id="YjWktudqGN4">
+                        <img src="https://img.youtube.com/vi/YjWktudqGN4/0.jpg" data-video-id="YjWktudqGN4">
+                        <div class="video-description">
+                            <h4>
+
+                                CSS Display Property in Depth: Understanding Inline, Block, and Inline-Block</h4>
+                            <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>
+                    <div class="video-item" data-video-id="9BlNJFIMUrY">
+                        <img src="https://img.youtube.com/vi/9BlNJFIMUrY/0.jpg" data-video-id="9BlNJFIMUrY">
+                        <div class="video-description">
+                            <h4>
+
+                                Mastering CSS Position Property: Static, Relative, Absolute, Fixed, and Sticky</h4>
+                            <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                               
+                        </div>
+                    </div>
+        </div>
+        <div class="video-grid">
+            <div class="video-item" data-video-id="APhPNDikwRE">
+                <img src="https://img.youtube.com/vi/APhPNDikwRE/0.jpg" data-video-id="APhPNDikwRE">
+                <div class="video-description">
+                    <h4>
+
+                        CSS Size Units in Depth: Unlocking the Power of px, %, vw, vh, em, and rem</h4>
+                    <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                       
+                </div>
+            </div> 
+            <div class="video-item" data-video-id="eMrjjsnQUDw">
+                <img src="https://img.youtube.com/vi/eMrjjsnQUDw/0.jpg" data-video-id="eMrjjsnQUDw">
+                <div class="video-description">
+                    <h4>
+
+                        Mastering CSS Float, Clear, and Overflow in 20 Minutes</h4>
+                    <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                       
+                </div>
+            </div>
+            <div class="video-item" data-video-id="tN12g5QUIqg">
+                <img src="https://img.youtube.com/vi/tN12g5QUIqg/0.jpg" data-video-id="tN12g5QUIqg">
+                <div class="video-description">
+                    <h4>
+
+                        Complete FLEXBOX in 1 Video</h4>
+                    <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                       
+                </div>
+            </div>
+            <div class="video-item" data-video-id="tcgXPI6Nxsw">
+                <img src="https://img.youtube.com/vi/tcgXPI6Nxsw/0.jpg" data-video-id="tcgXPI6Nxsw">
+                <div class="video-description">
+                    <h4>
+
+                        CSS Media Queries and Custom Variables Explained</h4>
+                    <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                       
+                </div>
+            </div>
+            <div class="video-item" data-video-id="D0vA_R8lVLw">
+                <img src="https://img.youtube.com/vi/D0vA_R8lVLw/0.jpg" data-video-id="D0vA_R8lVLw">
+                <div class="video-description">
+                    <h4>
+
+                        CSS Shadow Effects - Box Shadow && Text Shadow</h4>
+                    <p>Complete CSS Course for 2024 - Zero to Hero</p>
+                       
+                </div>
+            </div>
+</div>
+
+<h2 id="javascript">JavaScript Courses</h2>
+<div class="video-grid">
+    <div class="video-item" data-video-id="1dFqthtouqU">
+        <img src="https://img.youtube.com/vi/1dFqthtouqU/0.jpg" data-video-id="1dFqthtouqU">
+        <div class="video-description">
+            <h4>
+
+                Starting JavaScript Series 2024 || Intro to JavaScript</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="u3v2H5mwixY">
+        <img src="https://img.youtube.com/vi/u3v2H5mwixY/0.jpg" data-video-id="u3v2H5mwixY">
+        <div class="video-description">
+            <h4>
+
+                Variables and DataTypes in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="7k6oEConqLA">
+        <img src="https://img.youtube.com/vi/7k6oEConqLA/0.jpg" data-video-id="7k6oEConqLA">
+        <div class="video-description">
+            <h4>
+
+                Operators & Conditionals in JavaScript || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="UXxwO_U_gXI">
+        <img src="https://img.youtube.com/vi/UXxwO_U_gXI/0.jpg" data-video-id="UXxwO_U_gXI">
+        <div class="video-description">
+            <h4>
+
+                Loops and String in JavaScript || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="nqC-UlGTssg">
+        <img src="https://img.youtube.com/vi/nqC-UlGTssg/0.jpg" data-video-id="nqC-UlGTssg">
+        <div class="video-description">
+            <h4>
+
+                Plain and Arrow Functions in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="XK8loB2jYDE">
+        <img src="https://img.youtube.com/vi/XK8loB2jYDE/0.jpg" data-video-id="XK8loB2jYDE">
+        <div class="video-description">
+            <h4>
+
+                Reference Types: Objects && Arrays in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="eK4gqHb7P7w">
+        <img src="https://img.youtube.com/vi/eK4gqHb7P7w/0.jpg" data-video-id="eK4gqHb7P7w">
+        <div class="video-description">
+            <h4>
+
+                Variable/Function Hoisting && Function Calls in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="7NA3hX3IfVg">
+        <img src="https://img.youtube.com/vi/7NA3hX3IfVg/0.jpg" data-video-id="7NA3hX3IfVg">
+        <div class="video-description">
+            <h4>
+
+                Temporal Dead Zone in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="SslpdF_HlFc">
+        <img src="https://img.youtube.com/vi/SslpdF_HlFc/0.jpg" data-video-id="SslpdF_HlFc">
+        <div class="video-description">
+            <h4>
+
+                Classes && Default Parameters in Functions || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+    <div class="video-item" data-video-id="cmgpJxt1q6k">
+        <img src="https://img.youtube.com/vi/cmgpJxt1q6k/0.jpg" data-video-id="cmgpJxt1q6k">
+        <div class="video-description">
+            <h4>
+
+                Common In-Built Objects in JS || JavaScript Series 2024</h4>
+            <p>Complete JavaScript Course for 2024 - Zero to Hero</p>
+               
+        </div>
+    </div> 
+</div>
+<br>
+<hr>
+        <div class="footer">
+            <div class="footer-column">
+                <h3>BROWSE COURSES</h3>
+                <br>
+                <ul>
+                    <li><a href="#">Learn AI</a></li>
+                    <li><a href="#">Learn Python</a></li>
+                    <li><a href="#">Learn Architecture</a></li>
+                    <li><a href="#">Learn Computer Programming</a></li>
+                    <li><a href="#">Learn Software Engineering</a></li>
+                    <li><a href="#">Learn Blockchain</a></li>
+                    <li><a href="#">Learn Project Management</a></li>
+                </ul>
+            </div>
+    
+            
+            
+            <div class="footer-column">
+                <h3>START A NEW CAREER</h3>
+                <br>
+                <ul>
+                    <li><a href="#">Coding Boot Camp</a></li>
+                    <li><a href="#">AI Boot Camp</a></li>
+                    <li><a href="#">Data Analytics Boot Camp</a></li>
+                    <li><a href="#">UX/UI Boot Camp</a></li>
+                    <li><a href="#">Cybersecurity Boot Camp</a></li>
+                    <li><a href="#">UX/UI Boot Camp</a></li>
+                    <li><a href="#">Digital Marketing Boot Camp</a></li>
+    
+                </ul>
+            </div>
+    
+            
+            <div class="footer-column">
+                <h3>COMPLETE YOUR COURSE OFFLINE</h3>
+                <br>
+                <ul>
+                    <li><a href="#">BACHELOR OF TECHNOLOGY</a></li>
+                    <li><a href="#">DIPLOMA</a></li>
+                    <li><a href="#">MASTER OF COMPUETR APPLICATION</a></li>
+                    <li><a href="#">MASTER OF BUSINESS ADMINSTRATION</a></li>
+                    <li><a href="#">MASTER OF TECHNOLOGY</a></li>
+                    <li><a href="#">DOCTOR OF PHILOSOPHY</a></li>
+                    <li><a href="#">ENGINEERING</a></li>
+    
+                </ul>
+            </div>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <img src="figure.jpg" alt="figure"  class="figure">
+            
+        
+        </div>
+    </div>
+
+    <div class="video-player" id="videoPlayer">
+        <span class="close" onclick="closeVideoPlayer()">&times;</span>
+        <iframe id="videoIframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+            var fullname = localStorage.getItem("fullname");
+            var email = localStorage.getItem("email");
+
+            if (fullname && email) {
+                document.getElementById("profileIcon").textContent = fullname.charAt(0);
+                document.getElementById("profileName").textContent = "Name: " + fullname;
+                document.getElementById("profileEmail").textContent = "Email: " + email;
+            }
+
+            var profileIcon = document.getElementById("profileIcon");
+            var profileDropdown = document.getElementById("profileDropdown");
+
+            profileIcon.addEventListener("click", function() {
+                profileDropdown.style.display = profileDropdown.style.display === "block" ? "none" : "block";
+            });
+
+
+            document.addEventListener("click", function(event) {
+                if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+                    profileDropdown.style.display = "none";
+                }
+            });
+
+            var videoThumbnails = document.querySelectorAll(".video-grid img");
+            videoThumbnails.forEach(function(thumbnail) {
+                thumbnail.addEventListener("click", function() {
+                    var fullname = localStorage.getItem("fullname");
+                    if (fullname) {
+                        var videoId = thumbnail.getAttribute("data-video-id");
+                        showVideoPlayer(videoId);
+                    } else {
+                        alert("Please log in to view the video.");
+                        window.location.href = "index.html";
+                    }
+                });
+            });
+        });
+
+        function showVideoPlayer(videoId) {
+            var videoPlayer = document.getElementById("videoPlayer");
+            var videoIframe = document.getElementById("videoIframe");
+            videoIframe.src = "https://www.youtube.com/embed/" + videoId;
+            videoPlayer.style.display = "flex";
+        }
+
+        function closeVideoPlayer() {
+            var videoPlayer = document.getElementById("videoPlayer");
+            var videoIframe = document.getElementById("videoIframe");
+            videoIframe.src = "";
+            videoPlayer.style.display = "none";
+        }
+
+        function logout() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
